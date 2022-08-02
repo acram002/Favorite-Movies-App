@@ -7,7 +7,9 @@ import java.lang.reflect.Array;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class UserInterface implements ActionListener{
@@ -28,11 +30,21 @@ public class UserInterface implements ActionListener{
 	
 	JTextField input = new JTextField(50);
 	
+	JPanel panel = new JPanel();
+	
+	JList movieList;// = new JList<>();
+	
 	UserInterface(){
 		
-		JList movieList = new JList((list.getList().toArray()));
+		//JList movieList = new JList((list.getList().toArray()));
 		
-		JList List = new JList(boop);
+		//JList<String> List = new JList<String>(boop);
+
+		//JLabel l = new JLabel("hello");
+		//solve s = = new solve();
+		
+		movieList = new JList((list.getList().toArray()));
+		movieList.addListSelectionListener(s);
 		
 		frame.setTitle("Favorite Movies");
 		frame.setSize(400, 400);
@@ -62,7 +74,12 @@ public class UserInterface implements ActionListener{
 		frame.add(saveButt);
 		frame.add(input);
 		
-		frame.add(List);
+		panel.add(movieList);
+		frame.add(panel);
+		frame.show();
+		
+		
+		//frame.add(List);
 		
 		
 		frame.add(movieList);
@@ -91,3 +108,5 @@ public class UserInterface implements ActionListener{
 		}
 }
 }
+
+//reference https://www.geeksforgeeks.org/java-swing-jlist-with-examples/

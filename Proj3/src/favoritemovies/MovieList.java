@@ -15,6 +15,8 @@ public class MovieList {
 	
 	public ArrayList<String> getList(){
 		
+		favMoviesList.add("hello");
+		
 		return favMoviesList;
 		
 	}
