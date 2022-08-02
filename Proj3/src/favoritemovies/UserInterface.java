@@ -3,9 +3,11 @@ package favoritemovies;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JTextField;
 
 public class UserInterface implements ActionListener{
@@ -16,9 +18,21 @@ public class UserInterface implements ActionListener{
 	JButton loadButt = new JButton("Load");
 	JButton saveButt = new JButton("Save");
 	
+	private Add add = new Add();
+	private Load load = new Load();
+	private Remove remove = new Remove();
+	private Save save = new Save();
+	private MovieList list = new MovieList();
+	
+	private String[] boop = new String[] {"hello"};
+	
 	JTextField input = new JTextField(50);
 	
 	UserInterface(){
+		
+		JList movieList = new JList((list.getList().toArray()));
+		
+		JList List = new JList(boop);
 		
 		frame.setTitle("Favorite Movies");
 		frame.setSize(400, 400);
@@ -47,6 +61,11 @@ public class UserInterface implements ActionListener{
 		frame.add(loadButt);
 		frame.add(saveButt);
 		frame.add(input);
+		
+		frame.add(List);
+		
+		
+		frame.add(movieList);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(600, 600));
 		frame.pack();
@@ -58,8 +77,8 @@ public class UserInterface implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == addButt) {
-			//Do stuff
-		
+			String newFav = input.getText();
+			add.AddMovie((newFav.trim()).toLowerCase());
 		}
 		else if(e.getSource() == removeButt) {
 			
