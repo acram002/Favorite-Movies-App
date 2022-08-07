@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,13 +28,15 @@ public class UserInterface implements ActionListener{
 	private Save save = new Save();
 	private MovieList list = new MovieList();
 	
+	private DefaultListModel model = new DefaultListModel();//!!!!
+	
 	private String[] boop = new String[] {"hello"};
 	
 	JTextField input = new JTextField(50);
 	
 	JPanel panel = new JPanel();
 	
-	JList movieList;// = new JList<>();
+	JList movieList = new JList( model );// = new JList<>(); !!!!!
 	
 	UserInterface(){
 		
@@ -43,27 +47,31 @@ public class UserInterface implements ActionListener{
 		//JLabel l = new JLabel("hello");
 		//solve s = = new solve();
 		
-		movieList = new JList((list.getList().toArray()));
-		movieList.addListSelectionListener(s);
+		//movieList = new JList((list.getList().toArray())); !!!!!
+		
+		
+		//movieList.addListSelectionListener();
+		
+		model.addElement( "bloop" );
 		
 		frame.setTitle("Favorite Movies");
-		frame.setSize(400, 400);
+		//frame.setSize(400, 400);
 		
-		input.setBounds(220,260,180,30);
+		input.setBounds(200,250,180,30);
 		
-		addButt.setBounds(130,50,150,80);
+		addButt.setBounds(125,325,150,80);
 		addButt.setFocusable(false);
 		addButt.addActionListener(this);
 		
-		removeButt.setBounds(330,50,150,80);
+		removeButt.setBounds(325,325,150,80);
 		removeButt.setFocusable(false);
 		removeButt.addActionListener(this);
 		
-		loadButt.setBounds(130,150,150,80);
+		loadButt.setBounds(125,425,150,80);
 		loadButt.setFocusable(false);
 		loadButt.addActionListener(this);
 		
-		saveButt.setBounds(330,150,150,80);
+		saveButt.setBounds(325,425,150,80);
 		saveButt.setFocusable(false);
 		saveButt.addActionListener(this);
 		
@@ -74,15 +82,16 @@ public class UserInterface implements ActionListener{
 		frame.add(saveButt);
 		frame.add(input);
 		
+		panel.setBounds(100,20,400,600);
+		
 		panel.add(movieList);
 		frame.add(panel);
-		frame.show();
-		
-		
+		//frame.show();
+
 		//frame.add(List);
 		
 		
-		frame.add(movieList);
+		//frame.add(movieList);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(600, 600));
 		frame.pack();
@@ -96,6 +105,9 @@ public class UserInterface implements ActionListener{
 		if(e.getSource() == addButt) {
 			String newFav = input.getText();
 			add.AddMovie((newFav.trim()).toLowerCase());
+			model.addElement( (newFav.trim()).toLowerCase());
+			System.out.println(list.getList());
+		
 		}
 		else if(e.getSource() == removeButt) {
 			

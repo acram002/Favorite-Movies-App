@@ -5,18 +5,17 @@ import java.util.List;
 
 public class MovieList {
 
-	private ArrayList<String> favMoviesList = new ArrayList<String>();
+	private static ArrayList<String> favMoviesList = new ArrayList<String>();
 	
 	public void setList(String newFav) {
 		
 		favMoviesList.add(newFav);
+		System.out.println(favMoviesList);
 		
 	}
 	
 	public ArrayList<String> getList(){
-		
-		favMoviesList.add("hello");
-		
+
 		return favMoviesList;
 		
 	}

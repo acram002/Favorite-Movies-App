@@ -7,7 +7,6 @@ public class Add {
 	public void AddMovie(String newFav) {
 		
 		list.setList(newFav);
-		
 	}
 	
 }
