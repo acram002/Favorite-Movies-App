@@ -28,7 +28,7 @@ public class UserInterface implements ActionListener{
 	
 	private Add add = new Add();
 	private Load load = new Load();
-	private Remove remove = new Remove();
+	private ErrorMessage error = new ErrorMessage();
 	private Save save = new Save();
 	private MovieList list = new MovieList();
 	
@@ -82,10 +82,8 @@ public class UserInterface implements ActionListener{
 		panel.add(new JScrollPane(movieList));
 		
 		instruct.setBounds(150, 175, 300, 50);
-		instruct.setText("Select item and hold shift to multi-select itemsMORE INSTRUCTIONS");
+		instruct.setText("Enter movie into text box and press Add to add to list\nSelect item and hold shift to multi-select items\nPress Remove to remove items from list\nMORE INSTRUCTIONS");
 		instruct.setLineWrap(true);
-		
-		
 		
 		frame.add(instruct);
 		frame.add(panel);
@@ -111,8 +109,14 @@ public class UserInterface implements ActionListener{
 		}
 		else if(e.getSource() == removeButt) {
 			List selected = movieList.getSelectedValuesList();
-			if (selected == null) {
-				System.out.println("Please select an item to delete!");//PLACE IN JLABEL OR SUMN
+			if (movieList.isSelectionEmpty()) {
+				System.out.println("Please select an item to delete!");
+				//JLabel error = new JLabel("Please select an item to delete!");
+				//error.setBounds(175,190,200,100);
+				//frame.add(error);
+				
+				error.errorMessage("Please select an item to delete!", "ERROR");
+				
 			}
 			else {
 			for (int i = 0; i< selected.size(); i++) {
