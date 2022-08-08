@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -12,7 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 public class UserInterface implements ActionListener{
 
@@ -36,27 +40,16 @@ public class UserInterface implements ActionListener{
 	
 	JPanel panel = new JPanel();
 	
-	JList movieList = new JList( model );// = new JList<>(); !!!!!
+	JList movieList = new JList( model );
+	
+	JTextArea instruct = new JTextArea();
 	
 	UserInterface(){
 		
-		//JList movieList = new JList((list.getList().toArray()));
-		
-		//JList<String> List = new JList<String>(boop);
-
-		//JLabel l = new JLabel("hello");
-		//solve s = = new solve();
-		
-		//movieList = new JList((list.getList().toArray())); !!!!!
-		
-		
-		//movieList.addListSelectionListener();
-		
-		model.addElement( "bloop" );
+		//model.addElement( "bloop" );
 		
 		frame.setTitle("Favorite Movies");
-		//frame.setSize(400, 400);
-		
+			
 		input.setBounds(200,250,180,30);
 		
 		addButt.setBounds(125,325,150,80);
@@ -82,21 +75,28 @@ public class UserInterface implements ActionListener{
 		frame.add(saveButt);
 		frame.add(input);
 		
-		panel.setBounds(100,20,400,600);
-		
-		panel.add(movieList);
-		frame.add(panel);
-		//frame.show();
+		movieList.setLayoutOrientation(JList.VERTICAL);
+		movieList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-		//frame.add(List);
+		panel.setBounds(175,25,250,200);
+		panel.add(new JScrollPane(movieList));
+		
+		instruct.setBounds(150, 175, 300, 50);
+		instruct.setText("Select item and hold shift to multi-select itemsMORE INSTRUCTIONS");
+		instruct.setLineWrap(true);
 		
 		
-		//frame.add(movieList);
+		
+		frame.add(instruct);
+		frame.add(panel);
+	
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(600, 600));
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		
+		
 		
 	}
 	
@@ -110,7 +110,15 @@ public class UserInterface implements ActionListener{
 		
 		}
 		else if(e.getSource() == removeButt) {
-			
+			List selected = movieList.getSelectedValuesList();
+			if (selected == null) {
+				System.out.println("Please select an item to delete!");//PLACE IN JLABEL OR SUMN
+			}
+			else {
+			for (int i = 0; i< selected.size(); i++) {
+			model.removeElement(selected.get(i));
+			}
+			}
 		}
 		else if(e.getSource() == loadButt) {
 			
