@@ -3,6 +3,7 @@ package favoritemovies;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,9 +127,25 @@ public class UserInterface implements ActionListener{
 		}
 		else if(e.getSource() == loadButt) {
 			
+			
 		}
 		else if(e.getSource() == saveButt) {
 	
+			for (int i = 0; i < movieList.getModel().getSize(); i++) {
+				
+				String movie = movieList.getModel().getElementAt(i).toString();
+				
+				Buffered Writer Writer = new BufferedWriter(new FileWriter(movies));
+				Writer.write(movie);
+				
+				//https://stackabuse.com/reading-and-writing-files-in-java/  ref for file writing and reading
+				
+				System.out.println(movie);
+				
+			}
+			
+		
+			
 		}
 }
 }
