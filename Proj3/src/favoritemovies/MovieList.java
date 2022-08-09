@@ -10,7 +10,6 @@ public class MovieList {
 	public void setList(String newFav) {
 		
 		favMoviesList.add(newFav);
-		System.out.println(favMoviesList);
 		
 	}
 	

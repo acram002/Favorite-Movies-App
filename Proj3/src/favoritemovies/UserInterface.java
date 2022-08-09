@@ -1,23 +1,10 @@
 package favoritemovies;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.awt.event.*;
+import java.io.*;
 import java.util.List;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 
 public class UserInterface implements ActionListener{
 
@@ -28,30 +15,18 @@ public class UserInterface implements ActionListener{
 	JButton saveButt = new JButton("Save");
 	
 	private Add add = new Add();
-	private Load load = new Load();
 	private ErrorMessage error = new ErrorMessage();
-	private Save save = new Save();
 	private MovieList list = new MovieList();
-	
 	private DefaultListModel model = new DefaultListModel();//!!!!
-	
-	private String[] boop = new String[] {"hello"};
-	
+		
 	JTextField input = new JTextField(50);
-	
 	JPanel panel = new JPanel();
-	
 	JList movieList = new JList( model );
-	
 	JTextArea instruct = new JTextArea();
 	
 	UserInterface(){
-		
-		//model.addElement( "bloop" );
-		
-		frame.setTitle("Favorite Movies");
-			
-		input.setBounds(200,250,180,30);
+				
+		input.setBounds(200,275,180,30);
 		
 		addButt.setBounds(125,325,150,80);
 		addButt.setFocusable(false);
@@ -69,6 +44,7 @@ public class UserInterface implements ActionListener{
 		saveButt.setFocusable(false);
 		saveButt.addActionListener(this);
 		
+		frame.setTitle("Favorite Movies");
 		frame.setLayout(null);
 		frame.add(addButt);
 		frame.add(removeButt);
@@ -79,12 +55,12 @@ public class UserInterface implements ActionListener{
 		movieList.setLayoutOrientation(JList.VERTICAL);
 		movieList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-		panel.setBounds(175,25,250,200);
+		panel.setBounds(150,25,275,200);
 		panel.add(new JScrollPane(movieList));
 		
-		instruct.setBounds(150, 175, 300, 50);
-		instruct.setText("Enter movie into text box and press Add to add to list\nSelect item and hold shift to multi-select items\nPress Remove to remove items from list\nMORE INSTRUCTIONS");
-		instruct.setLineWrap(true);
+		instruct.setBounds(100, 175, 400, 85);
+		instruct.setText("Enter movie into text box and press Add to add to list\nSelect item and hold shift to multi-select items\nPress Remove to remove selected items from list\nSave will save list of movies to movies.txt\nLoad will load previously saved list");
+		instruct.setEditable(false);
 		
 		frame.add(instruct);
 		frame.add(panel);
@@ -105,17 +81,11 @@ public class UserInterface implements ActionListener{
 			String newFav = input.getText();
 			add.AddMovie((newFav.trim()).toLowerCase());
 			model.addElement( (newFav.trim()).toLowerCase());
-			System.out.println(list.getList());
 		
 		}
 		else if(e.getSource() == removeButt) {
 			List selected = movieList.getSelectedValuesList();
 			if (movieList.isSelectionEmpty()) {
-				System.out.println("Please select an item to delete!");
-				//JLabel error = new JLabel("Please select an item to delete!");
-				//error.setBounds(175,190,200,100);
-				//frame.add(error);
-				
 				error.errorMessage("Please select an item to delete!", "ERROR");
 				
 			}
@@ -126,28 +96,36 @@ public class UserInterface implements ActionListener{
 			}
 		}
 		else if(e.getSource() == loadButt) {
+			model.removeAllElements();
+			try(BufferedReader read = new BufferedReader(new FileReader("movies.txt"))) {
+				String line = read.readLine();
+				while(line != null) {
+					model.addElement(line);
+					line = read.readLine();
+				}
+			}
+			catch(FileNotFoundException exce) {
+				
+			}
+			catch(IOException excep) {
 			
-			
+			}
 		}
 		else if(e.getSource() == saveButt) {
+			
+			try (BufferedWriter write = new BufferedWriter(new FileWriter(new File("movies.txt")))){
 	
 			for (int i = 0; i < movieList.getModel().getSize(); i++) {
 				
 				String movie = movieList.getModel().getElementAt(i).toString();
-				
-				Buffered Writer Writer = new BufferedWriter(new FileWriter(movies));
-				Writer.write(movie);
-				
-				//https://stackabuse.com/reading-and-writing-files-in-java/  ref for file writing and reading
-				
-				System.out.println(movie);
+				write.write(movie + "\n");
 				
 			}
-			
-		
+			}
+				catch (IOException exc){
+					
+				}
 			
 		}
 }
 }
-
-//reference https://www.geeksforgeeks.org/java-swing-jlist-with-examples/
