@@ -8,12 +8,12 @@ import javax.swing.JOptionPane;
 
 public class ErrorMessage {
 
-
 	public void errorMessage(String message, String titleBar) {
-		
-       Component nul = null;
-       JOptionPane.showMessageDialog(nul, message, titleBar, JOptionPane.INFORMATION_MESSAGE);
-	
+		// displays error message in window if no item selected and
+		// remove button pressed
+		Component nul = null;
+		JOptionPane.showMessageDialog(nul, message, titleBar, JOptionPane.INFORMATION_MESSAGE);
+
 	}
-	
+
 }
